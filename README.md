@@ -1,2 +1,2 @@
-# aoc_2021
-AOC 2021 in C++ for Practice
+# AOC 2021
+AOC 2021 in C++ for practice. 
