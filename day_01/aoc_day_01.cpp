@@ -2,33 +2,44 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 void part_1(const string& lines) {
 
+    // stream of lines
     istringstream stream(lines);
-
     string line;
-    int prev_num = -1;
-    int increasing = 0;
 
-    while (getline(stream, line)) {
-        if (prev_num == -1) {
-            prev_num = stoi(line);
-        } else {
-            if (stoi(line) > prev_num) {
-                increasing++;
-            }
+    // convert to vector of numbers
+    vector<int> nums;
 
-            prev_num = stoi(line);
+    while (stream >> line) {
+        nums.push_back(stoi(line));
+    }
+
+    // two counters for part 1 and part 2
+    int increasing_part_1 = 0;
+    int increasing_part_2 = 0;
+
+    // count window size 1 and window size 3
+    for (int i = 1; i < nums.size(); ++i) {
+        if (nums[i] > nums[i-1]) {
+            ++increasing_part_1;
         }
 
+        if (i > 2 && (nums[i-1]+nums[i-2]+nums[i] > nums[i-1]+nums[i-2]+nums[i-3])) {
+            ++increasing_part_2;
+        }
     }
-    cout << "Part 1: " << increasing << endl;
+
+    // output the results
+    cout << "Part 1: " << increasing_part_1 << endl;
+    cout << "Part 2: " << increasing_part_2 << endl;
 }
 
 void part_2(const string& lines) {
-    cout << "Part 2: " << "TODO" << endl;
+
 }
 
 int main() {
