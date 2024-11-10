@@ -85,7 +85,7 @@ private:
 };
 
 // Add this to print the bingo cards
-std::ostream& operator<<(std::ostream& os, const BingoCard& bingoCard) {
+ostream &operator<<(ostream &os, const BingoCard &bingoCard) {
     os << "= Bingo Card =" << endl;
     for (vector<int> row : bingoCard.numbers) {
         for (int row_number : row) {

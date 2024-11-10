@@ -21,7 +21,7 @@ public:
 };
 
 // print a point
-std::ostream &operator<<(std::ostream &os, const Point &p) {
+ostream &operator<<(ostream &os, const Point &p) {
     os << "(" << p.x << ", " << p.y << ")";
     return os;
 }
