@@ -40,5 +40,4 @@ void Day1::part_1(const vector<string>& lines) {
 }
 
 void Day1::part_2(const vector<string>& lines) {
-    cout << "Done already" << endl;
 }
