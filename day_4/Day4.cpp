@@ -18,7 +18,7 @@ public:
     }
 
     // check if the card has bingo
-    bool hasBingo() const {
+    [[nodiscard]] bool hasBingo() const {
         // check for each column/row
         for (int i = 0; i < 5; ++i) {
             // if this row/column
@@ -58,7 +58,7 @@ public:
         }
     }
 
-    int computeScore() const {
+    [[nodiscard]] int computeScore() const {
         int score = 0;
         // check for each cell
         for (int i = 0; i < 5; ++i) {
@@ -73,7 +73,7 @@ public:
         return score;
     }
 
-    bool hadBingo() const {
+    [[nodiscard]] bool hadBingo() const {
         return bingo;
     }
 
@@ -87,8 +87,8 @@ private:
 // Add this to print the bingo cards
 ostream &operator<<(ostream &os, const BingoCard &bingoCard) {
     os << "= Bingo Card =" << endl;
-    for (vector<int> row : bingoCard.numbers) {
-        for (int row_number : row) {
+    for (const vector<int>& row : bingoCard.numbers) {
+        for (const int row_number : row) {
             if (row_number > 9) {
                 os << row_number << " ";
             } else {

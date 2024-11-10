@@ -33,7 +33,7 @@ void Day3::part_1(const vector<string>& lines) {
     int epsilon_int = 0;
     int index_counter = 0;
 
-    for (int i=gamma.size()-1; i>=0; i--) {
+    for (int i = gamma.size()-1; i>=0; i--) {
         if (gamma[i]) {
             gamma_int += pow(2, index_counter);
         }

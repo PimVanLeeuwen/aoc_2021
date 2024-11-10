@@ -100,7 +100,7 @@ void Day5::part_1(const vector<string> &lines) {
 
     // get all the points
     for (const auto &line: lines) {
-        // convert into a stringstream to split on token
+        // convert into a string stream to split on token
         // for this we converted -> to , in the input file
         stringstream ss(line);
         string token;
