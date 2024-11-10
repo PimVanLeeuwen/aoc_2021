@@ -7,6 +7,7 @@
 #include "day_2/Day2.h"
 #include "day_3/Day3.h"
 #include "day_4/Day4.h"
+#include "day_5/Day5.h"
 using namespace std;
 
 int main() {
@@ -51,6 +52,10 @@ int main() {
         case 4:
             Day4::part_1(lines);
             Day4::part_2(lines);
+            break;
+        case 5:
+            Day5::part_1(lines);
+            Day5::part_2(lines);
             break;
         default:
             cerr << "Error opening class corresponding to day" << endl;

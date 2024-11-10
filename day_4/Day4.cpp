@@ -14,8 +14,7 @@ public:
     vector<vector<int>> numbers;
 
     // constructor
-    explicit BingoCard(const vector<vector<int>> &param_numbers) {
-        numbers = param_numbers;
+    explicit BingoCard(const vector<vector<int> > &param_numbers) : numbers(param_numbers) {
     }
 
     // check if the card has bingo
