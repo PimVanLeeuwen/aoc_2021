@@ -4,7 +4,6 @@
 
 #include "Day10.h"
 
-#include <deque>
 #include <algorithm>
 #include <iostream>
 #include <map>
