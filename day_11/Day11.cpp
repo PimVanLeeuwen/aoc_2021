@@ -14,35 +14,38 @@ using namespace std;
 class Octopus {
 public:
     int power;
-    int x; int y;
+    int x;
+    int y;
     bool queued = false;
     bool flashed = false;
 
-    explicit Octopus(int p, const int x, const int y) : power(p), x(x), y(y) {}
+    explicit Octopus(int p, const int x, const int y) : power(p), x(x), y(y) {
+    }
 };
 
 void Day11::execute(const vector<string> &lines) {
-    vector<vector<Octopus>> grid;
+    vector<vector<Octopus> > grid;
     constexpr int STEPS = 900;
     long part_1 = 0;
 
     // make our grid of octopus
     for (int y = 0; y < lines.size(); ++y) {
         // create a line
-        vector<Octopus> grid_line; grid_line.reserve(lines.size());
+        vector<Octopus> grid_line;
+        grid_line.reserve(lines.size());
         for (int x = 0; x < lines.size(); ++x) {
-            grid_line.emplace_back(lines[y][x]-'0', x, y);
+            grid_line.emplace_back(lines[y][x] - '0', x, y);
         }
         grid.emplace_back(grid_line);
     }
 
     // each iteration of this loop will be a step
     for (int i = 0; i < STEPS; i++) {
-        vector<pair<int, int>> to_flash;
+        vector<pair<int, int> > to_flash;
 
         // first is increasing the energy level of each octopus
-        for (auto &grid_line : grid) {
-            for (auto &octopus : grid_line) {
+        for (auto &grid_line: grid) {
+            for (auto &octopus: grid_line) {
                 octopus.power++;
                 // if it becomes greater than 9 it will be added to the flash queue
 
@@ -70,7 +73,7 @@ void Day11::execute(const vector<string> &lines) {
                     grid[y][x].power++;
                     if (grid[y][x].power > 9 && !grid[y][x].flashed && !grid[y][x].queued) {
                         grid[y][x].queued = true;
-                        to_flash.emplace_back(x,y);
+                        to_flash.emplace_back(x, y);
                     }
                 }
             }
@@ -78,8 +81,8 @@ void Day11::execute(const vector<string> &lines) {
 
         int count = 0;
         // reset all octopus that have flashed
-        for (auto &grid_line : grid) {
-            for (auto &octopus : grid_line) {
+        for (auto &grid_line: grid) {
+            for (auto &octopus: grid_line) {
                 if (octopus.flashed) {
                     count++;
                     octopus.power = 0;
@@ -99,8 +102,5 @@ void Day11::execute(const vector<string> &lines) {
         if (i == 99) {
             cout << "Part 1: " << part_1 << endl;
         }
-
     }
-
-
 }
