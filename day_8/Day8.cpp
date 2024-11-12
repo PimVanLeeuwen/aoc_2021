@@ -19,12 +19,14 @@ public:
     vector<string> output;
 
     // constructor
-    explicit DigitDisplay(const vector<string> &reference, const vector<string> &output) : reference(reference), output(output) {}
+    explicit DigitDisplay(const vector<string> &reference, const vector<string> &output) : reference(reference),
+        output(output) {
+    }
 
     // solver for part 1
     [[nodiscard]] int count_1478() const {
         int result = 0;
-        for (const auto &s : output) {
+        for (const auto &s: output) {
             if (s.size() == 2 || s.size() == 4 || s.size() == 3 || s.size() == 7) {
                 result++;
             }
@@ -42,10 +44,10 @@ public:
             if (valid_mapping(str)) {
                 vector<int> digits;
                 // translate all the output strings with the ref
-                for (const auto &out : output) {
+                for (const auto &out: output) {
                     // make the target, and sort that
                     string ref_target;
-                    for (const auto &c : out) {
+                    for (const auto &c: out) {
                         ref_target += str[char_to_int[c]];
                     }
                     sort(ref_target.begin(), ref_target.end());
@@ -54,23 +56,21 @@ public:
                     digits.push_back(mapping[ref_target]);
                 }
 
-                return 1000*digits[0] + 100*digits[1] + 10*digits[2] + digits[3];
+                return 1000 * digits[0] + 100 * digits[1] + 10 * digits[2] + digits[3];
             }
         }
 
         // this should not happen if everything is solvable
         throw invalid_argument("not solvable input");
-
     }
 
     // check if a string is a valid permutation
     bool valid_mapping(const string &p) {
-
         // for each word in the reference
-        for (const auto &ref : reference) {
+        for (const auto &ref: reference) {
             // make the target, and sort that
             string ref_target;
-            for (const auto &c : ref) {
+            for (const auto &c: ref) {
                 ref_target += p[char_to_int[c]];
             }
             sort(ref_target.begin(), ref_target.end());
@@ -82,10 +82,10 @@ public:
         }
 
         // the same for the output
-        for (const auto &out : output) {
+        for (const auto &out: output) {
             // make the target, and sort that
             string out_target;
-            for (const auto &c : out) {
+            for (const auto &c: out) {
                 out_target += p[char_to_int[c]];
             }
             sort(out_target.begin(), out_target.end());
@@ -98,6 +98,7 @@ public:
 
         return true;
     }
+
 private:
     map<string, int> mapping = {
         {"abcefg", 0},
@@ -128,12 +129,12 @@ private:
 ostream &operator<<(ostream &os, const DigitDisplay &digitDisplay) {
     os << "= DigitDisplay =" << endl;
     os << "Reference: ";
-    for (const string& ref : digitDisplay.reference) {
+    for (const string &ref: digitDisplay.reference) {
         os << ref << " ";
     }
     os << endl;
     os << "Output: ";
-    for (const string& out : digitDisplay.output) {
+    for (const string &out: digitDisplay.output) {
         os << out << " ";
     }
     os << endl;
@@ -141,7 +142,6 @@ ostream &operator<<(ostream &os, const DigitDisplay &digitDisplay) {
 }
 
 void Day8::execute(const vector<string> &lines) {
-
     int part_1 = 0;
     long part_2 = 0;
 
@@ -160,7 +160,8 @@ void Day8::execute(const vector<string> &lines) {
         while (getline(ss, token, ' ')) {
             if (token == "|") {
                 continue;
-            } if (ref.size() == 10) {
+            }
+            if (ref.size() == 10) {
                 out.push_back(token);
             } else {
                 ref.push_back(token);
@@ -172,7 +173,6 @@ void Day8::execute(const vector<string> &lines) {
         // if we are here anyway might as well collect the results
         part_1 += problem.count_1478();
         part_2 += problem.solve();
-
     }
 
     cout << "Part 1: " << part_1 << endl;
