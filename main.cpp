@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "day_1/Day1.h"
+#include "day_10/Day10.h"
 #include "day_2/Day2.h"
 #include "day_3/Day3.h"
 #include "day_4/Day4.h"
@@ -40,6 +41,7 @@ int main() {
     // close the file, not needed from this point on
     file.close();
 
+    // this is far from pretty but is a nice and easy way to execute the different days
     switch (day_input) {
         case 1:
             Day1::execute(lines);
@@ -67,6 +69,9 @@ int main() {
             break;
         case 9:
             Day9::execute(lines);
+            break;
+        case 10:
+            Day10::execute(lines);
             break;
         default:
             cerr << "Error opening class corresponding to day" << endl;
