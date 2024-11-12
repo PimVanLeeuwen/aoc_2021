@@ -10,7 +10,7 @@
 #include <vector>
 using namespace std;
 
-void Day1::part_1(const vector<string>& lines) {
+void Day1::execute(const vector<string>& lines) {
 
     vector<int> nums;
     nums.reserve(lines.size());
@@ -39,5 +39,3 @@ void Day1::part_1(const vector<string>& lines) {
     cout << "Part 2: " << increasing_part_2 << endl;
 }
 
-void Day1::part_2(const vector<string>& lines) {
-}

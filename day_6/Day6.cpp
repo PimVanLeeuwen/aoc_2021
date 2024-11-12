@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void Day6::part_1(const vector<string> &lines) {
+void Day6::execute(const vector<string> &lines) {
     // fish, grouped by fish added at the same time (if we add 200 fish at the same time we just make a tuple of (200,8)
     // instead of going over all fish
     vector<vector<long> > fish;
@@ -61,7 +61,4 @@ void Day6::part_1(const vector<string> &lines) {
         fish_count += f[0];
     }
     cout << "Part 2: " << fish_count << endl;
-}
-
-void Day6::part_2(const vector<string> &lines) {
 }

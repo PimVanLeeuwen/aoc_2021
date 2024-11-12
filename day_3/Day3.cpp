@@ -9,7 +9,7 @@
 #include <cstring>
 #include <iostream>
 using namespace std;
-void Day3::part_1(const vector<string>& lines) {
+void Day3::execute(const vector<string>& lines) {
     auto counts = vector(12, 0);
     auto gamma = vector(12, 0);
     auto epsilon = vector(12, 0);
@@ -48,9 +48,7 @@ void Day3::part_1(const vector<string>& lines) {
 
     // output the results
     cout << "Part 1: " << gamma_int*epsilon_int << endl;
-}
 
-void Day3::part_2(const vector<string>& lines) {
     vector<string> lines_o2 = lines;
     vector<string> lines_co2 = lines;
 
@@ -104,7 +102,7 @@ void Day3::part_2(const vector<string>& lines) {
 
     int o2_int = 0;
     int co2_int = 0;
-    int index_counter = 0;
+    index_counter = 0;
 
     for (int i=11; i>=0; i--) {
         if (lines_co2[0][i] == '1') {

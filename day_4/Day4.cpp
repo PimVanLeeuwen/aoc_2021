@@ -101,7 +101,7 @@ ostream &operator<<(ostream &os, const BingoCard &bingoCard) {
     return os;
 }
 
-void Day4::part_1(const vector<string>& lines) {
+void Day4::execute(const vector<string> &lines) {
     vector<string> lines_edit = lines;
 
     // get the first line out
@@ -183,5 +183,3 @@ void Day4::part_1(const vector<string>& lines) {
     }
 }
 
-void Day4::part_2(const vector<string>& lines) {
-    }

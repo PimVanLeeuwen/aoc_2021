@@ -95,7 +95,7 @@ public:
 };
 
 
-void Day5::part_1(const vector<string> &lines) {
+void Day5::execute(const vector<string> &lines) {
     auto grid = CloudGrid(1000);
 
     // get all the points
@@ -120,7 +120,4 @@ void Day5::part_1(const vector<string> &lines) {
 
     cout << "Part 1: " << grid.part1() << endl;
     cout << "Part 2: " << grid.part2() << endl;
-}
-
-void Day5::part_2(const vector<string> &lines) {
 }

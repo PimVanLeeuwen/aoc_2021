@@ -10,6 +10,7 @@
 #include "day_5/Day5.h"
 #include "day_6/Day6.h"
 #include "day_7/Day7.h"
+#include "day_8/Day8.h"
 using namespace std;
 
 int main() {
@@ -40,32 +41,28 @@ int main() {
 
     switch (day_input) {
         case 1:
-            Day1::part_1(lines);
-            Day1::part_2(lines);
+            Day1::execute(lines);
             break;
         case 2:
-            Day2::part_1(lines);
-            Day2::part_2(lines);
+            Day2::execute(lines);
             break;
         case 3:
-            Day3::part_1(lines);
-            Day3::part_2(lines);
+            Day3::execute(lines);
             break;
         case 4:
-            Day4::part_1(lines);
-            Day4::part_2(lines);
+            Day4::execute(lines);
             break;
         case 5:
-            Day5::part_1(lines);
-            Day5::part_2(lines);
+            Day5::execute(lines);
             break;
         case 6:
-            Day6::part_1(lines);
-            Day6::part_2(lines);
+            Day6::execute(lines);
             break;
         case 7:
-            Day7::part_1(lines);
-            Day7::part_2(lines);
+            Day7::execute(lines);
+            break;
+        case 8:
+            Day8::execute(lines);
             break;
         default:
             cerr << "Error opening class corresponding to day" << endl;

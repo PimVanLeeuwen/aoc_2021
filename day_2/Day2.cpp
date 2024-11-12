@@ -10,7 +10,7 @@
 #include <vector>
 using namespace std;
 
-void Day2::part_1(const vector<string>& lines) {
+void Day2::execute(const vector<string>& lines) {
 
     int aim = 0;
     int x = 0;
@@ -38,8 +38,4 @@ void Day2::part_1(const vector<string>& lines) {
     // output the results
     cout << "Part 1: " << x*z << endl;
     cout << "Part 2: " << x*z_2 << endl;
-}
-
-void Day2::part_2(const vector<string>& lines) {
-    cout << "Done already" << endl;
 }

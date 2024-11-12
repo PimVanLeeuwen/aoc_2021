@@ -10,9 +10,7 @@
 
 class Day6 {
 public:
-    static void part_1(const std::vector<std::string> &lines);
-
-    static void part_2(const std::vector<std::string> &lines);
+    static void execute(const std::vector<std::string> &lines);
 };
 
 
