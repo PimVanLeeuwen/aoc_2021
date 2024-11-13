@@ -82,7 +82,6 @@ void Day13::execute(const vector<string> &lines) {
             part_1 = positions.size();
             cout << "Part 1: " << part_1 << endl;
         }
-
     }
 
     // get the range for the print
