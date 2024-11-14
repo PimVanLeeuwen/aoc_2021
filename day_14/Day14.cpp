@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <limits.h>
 #include <map>
 #include <set>
 #include <sstream>
@@ -32,8 +33,12 @@ void Day14::execute(const vector<string> &lines) {
         }
     }
 
+    // for each pair we add the new characters and generate the new pairs.
+    // by keeping track of the pairs we do not get the exponential large string and only have to process each distinct
+    // pair once
     for (int i = 0; i < STEPS; i++) {
         map<string, long> new_pairs;
+        // so pair PF becomes pair PP and PF
         for (const auto&[pair, amount] : pairs) {
             char target = rules[pair];
             string pair_first;
@@ -52,13 +57,18 @@ void Day14::execute(const vector<string> &lines) {
         if (i == 9 || i == 39) {
             map<char, long> counts_2;
 
+            // count all the chars
             for (const auto&[pair, amount] : pairs) {
                 counts_2[pair[0]] = (counts_2[pair[0]] > 0) ? counts_2[pair[0]] += amount : amount;
                 counts_2[pair[1]] = (counts_2[pair[1]] > 0) ? counts_2[pair[1]] += amount : amount;
             }
 
+            // we count everything double except one for these two as they are at the start and end, so add them
+            counts_2['B']++;
+            counts_2['K']++;
+
             long max_num = 0;
-            long min_num = SIZE_MAX;
+            long min_num = LONG_MAX;
 
             for (const auto&[c, amount] : counts_2) {
                 max_num = max(max_num, (amount/2));
@@ -70,9 +80,6 @@ void Day14::execute(const vector<string> &lines) {
             } else {
                 cout << "Part 2: " << max_num - min_num << endl;
             }
-
-
-            // count, shoul dbe 2740
 
         }
     }
