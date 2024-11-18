@@ -14,7 +14,7 @@
 
 using namespace std;
 
-long long dtoi(const string& decimal) {
+long long dtoi(const string &decimal) {
     size_t count = decimal.length()-1;
     long long result = 0;
     for (const char c : decimal) {
@@ -24,10 +24,10 @@ long long dtoi(const string& decimal) {
     return result;
 }
 
-long long process_packet(int& part_1, const string& packet, int& pointer) {
+long long process_packet(int &part_1, const string &packet, int &pointer) {
     // process the head
     part_1 += dtoi(packet.substr(pointer, 3)); // version
-    const int type_ID = dtoi(packet.substr(pointer+3, 3));
+    const int type_ID = dtoi(packet.substr(pointer + 3, 3));
 
     pointer += 6;
 
@@ -36,10 +36,10 @@ long long process_packet(int& part_1, const string& packet, int& pointer) {
         string number;
         while (true) {
             if (packet[pointer] == '1') {
-                number += packet.substr(pointer+1, 4);
+                number += packet.substr(pointer + 1, 4);
                 pointer += 5;
             } else {
-                number += packet.substr(pointer+1, 4);
+                number += packet.substr(pointer + 1, 4);
                 pointer += 5;
                 break;
             }
@@ -81,28 +81,28 @@ long long process_packet(int& part_1, const string& packet, int& pointer) {
         case 0:
             // sum; their value is the sum of the values of their sub-packets. If they only have a single sub-packet, their value is the value of the sub-packet
             start = 0;
-            for (const auto num : numbers) {
+            for (const auto num: numbers) {
                 start += num;
             }
             return start;
         case 1:
             // product; their value is the result of multiplying together the values of their sub-packets. If they only have a single sub-packet, their value is the value of the sub-packet
             start = 1;
-            for (const auto num : numbers) {
+            for (const auto num: numbers) {
                 start *= num;
             }
             return start;
         case 2:
             // min; their value is the minimum of the values of their sub-packets
             start = LLONG_MAX;
-            for (const auto num : numbers) {
+            for (const auto num: numbers) {
                 start = min(start, num);
             }
             return start;
         case 3:
             // max; their value is the maximum of the values of their sub-packets
             start = LLONG_MIN;
-            for (const auto num : numbers) {
+            for (const auto num: numbers) {
                 start = max(start, num);
             }
             return start;
@@ -130,7 +130,7 @@ long long process_packet(int& part_1, const string& packet, int& pointer) {
 }
 
 void Day16::execute(const vector<string> &lines) {
-    const string& input = lines[0];
+    const string &input = lines[0];
     string input_dec;
     int part_1 = 0;
 
