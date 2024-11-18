@@ -18,7 +18,7 @@ long long dtoi(const string& decimal) {
     size_t count = decimal.length()-1;
     long long result = 0;
     for (const char c : decimal) {
-        result = (c - '0') ? result + static_cast<int>(pow(2, count)) : result;
+        result = (c - '0') ? result + static_cast<long>(pow(2, count)) : result;
         count--;
     }
     return result;
@@ -91,7 +91,6 @@ long long process_packet(int& part_1, const string& packet, int& pointer) {
             for (const auto num : numbers) {
                 start *= num;
             }
-
             return start;
         case 2:
             // min; their value is the minimum of the values of their sub-packets
@@ -99,7 +98,6 @@ long long process_packet(int& part_1, const string& packet, int& pointer) {
             for (const auto num : numbers) {
                 start = min(start, num);
             }
-
             return start;
         case 3:
             // max; their value is the maximum of the values of their sub-packets
@@ -107,7 +105,6 @@ long long process_packet(int& part_1, const string& packet, int& pointer) {
             for (const auto num : numbers) {
                 start = max(start, num);
             }
-
             return start;
         case 5:
             // greater than; their value is 1 if the value of the first sub-packet is greater than the value of the second sub-packet; otherwise, their value is 0. These packets always have exactly two sub-packets
