@@ -11,6 +11,47 @@
 using namespace std;
 
 void Day17::execute(const vector<string> &lines) {
+
+    int part_1 = 0;
+    int part_2 = 0;
+
+    // further than this we don't need to look because then it will immediately be over the target.
+    for (int vx = 0; vx < 100; vx++) {
+        for (int vy = -3000; vy < 3000; vy++) {
+            // check a sequence for this
+            int max_y = 0;
+            int vx_c = vx;
+            int vy_c = vy;
+            int x = 0;
+            int y = 0;
+            // run the trajectory until it has definitely failed
+            while (x < 74 && y > -248) {
+                // change the coordinates
+                x += vx_c;
+                y += vy_c;
+                max_y = max(max_y, y);
+
+                // change the velocity
+                vy_c--;
+                if (vx_c > 0) {
+                    vx_c--;
+                }
+
+                // hit
+                if (x >= 29 && x <= 73 && y >= -248 && y <= -194) {
+                    part_1 = max(part_1, max_y);
+                    part_2++;
+                    break;
+                }
+
+            }
+        }
+    }
+
+    cout << "Part 1: " << part_1 << endl;
+    cout << "Part 2: " << part_2 << endl;
+
+
     // ATTEMPT IN Z3 BUT THIS IS NOT REALLY NEEDED, WILL KEEP HERE IN ANY CASE BECAUSE IT IS WORKING Z3 IN C++
     //
     // z3::context c;
