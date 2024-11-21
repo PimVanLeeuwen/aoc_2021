@@ -18,37 +18,26 @@ class Scanner {
     int number;
     vector<int> coordinates {};
     vector<vector<int>> beacons;
-    vector<int> sq_distances_unordered;
-    map<pair<int, int>, int> sq_distances{};
+    vector<int> distances_unordered;
 
 
     explicit Scanner(const int _number, const vector<vector<int>> &_beacons) : number(_number), beacons(_beacons) {
         for (int i = 0; i < beacons.size(); i++) {
             for (int j = i; j < beacons.size(); j++) {
                 int distance = pow((beacons[i][0] - beacons[j][0]),2) +
-                    pow(abs(beacons[i][1] - beacons[j][1]),2) +  pow(abs(beacons[i][2] - beacons[j][2]),2);
-                sq_distances[make_pair(i, j)] = distance;
-                sq_distances_unordered.push_back(distance);
+                    pow((beacons[i][1] - beacons[j][1]),2) +  pow((beacons[i][2] - beacons[j][2]),2);
+                distances_unordered.push_back(distance);
             }
         }
     }
 };
 
 bool overlap(const Scanner &left, const Scanner &right) {
-    const set<int> left_set(left.sq_distances_unordered.begin(), left.sq_distances_unordered.end());
-    const set<int> right_set(right.sq_distances_unordered.begin(), right.sq_distances_unordered.end());
-
-    int count = 0;
-
-    for (auto &l : left_set) {
-        for (auto &r : right_set) {
-            if (l == r) {
-                count++;
-            }
-        }
-    }
-
-    return count >= 66;
+    set<int> left_set(left.distances_unordered.begin(), left.distances_unordered.end());
+    set<int> right_set(right.distances_unordered.begin(), right.distances_unordered.end());
+    vector<int> intersection;
+    set_intersection(left_set.begin(), left_set.end(), right_set.begin(), right_set.end(), back_inserter(intersection));
+    return intersection.size() >= 66;
 }
 
 // yes this is hardcoded, we will deal with it
@@ -149,19 +138,13 @@ void place_scanner(const Scanner &left, Scanner &right) {
                             }
 
                             right.beacons = new_beacons;
-
                             return;
                         }
-
                     }
                 }
             }
         }
     }
-
-
-    vector<vector<int>> xyz = right.beacons;
-
 }
 
 // just checks if all scanners are placed
