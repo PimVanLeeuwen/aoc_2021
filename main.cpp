@@ -13,6 +13,7 @@
 #include "day_16/Day16.h"
 #include "day_17/Day17.h"
 #include "day_18/Day18.h"
+#include "day_19/Day19.h"
 #include "day_2/Day2.h"
 #include "day_3/Day3.h"
 #include "day_4/Day4.h"
@@ -104,6 +105,9 @@ int main() {
             break;
         case 18:
             Day18::execute(lines);
+            break;
+        case 19:
+            Day19::execute(lines);
             break;
         default:
             cerr << "Error opening class corresponding to day" << endl;
