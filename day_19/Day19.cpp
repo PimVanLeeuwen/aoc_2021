@@ -31,14 +31,10 @@ class Scanner {
                 sq_distances_unordered.push_back(distance);
             }
         }
-
-        if (number == 0) {
-            coordinates = {0,0,0};
-        }
     }
 };
 
-bool overlap(Scanner &left, Scanner &right) {
+bool overlap(const Scanner &left, const Scanner &right) {
     const set<int> left_set(left.sq_distances_unordered.begin(), left.sq_distances_unordered.end());
     const set<int> right_set(right.sq_distances_unordered.begin(), right.sq_distances_unordered.end());
 
@@ -168,6 +164,11 @@ void place_scanner(const Scanner &left, Scanner &right) {
 
 }
 
+// just checks if all scanners are placed
+bool all_placed(const vector<Scanner>& sc) {
+    return all_of(sc.begin(), sc.end(), [](const Scanner& s) {return s.coordinates.size() == 3;});
+}
+
 void Day19::execute(const vector<string> &lines) {
     vector<vector<int>> beacons;
     int number = 0;
@@ -191,11 +192,50 @@ void Day19::execute(const vector<string> &lines) {
             beacons.push_back(beacon);
         }
     }
+    scanners.emplace_back(number, beacons);
 
-    cout << overlap(scanners[0], scanners[1]) << endl;
+    // scanner 0 will be our main point
+    scanners[0].coordinates = {0,0,0};
 
-    place_scanner(scanners[0], scanners[1]);
+    // when not all scanners are placed
+    while (!all_placed(scanners)) {
+        for (const auto &scanner1 : scanners) {
+            // scanner 1 must be placed
+            if (scanner1.coordinates.size() != 3) {
+                continue;
+            }
 
-    cout << scanners[1].coordinates[0] << ", " << scanners[1].coordinates[1] << ", " << scanners[1].coordinates[2] << endl;
+            for (Scanner &scanner2 : scanners) {
+                // if there is overlap, place scanner 2
+                if (overlap(scanner1, scanner2) && scanner2.coordinates.size() != 3) {
+                    place_scanner(scanner1, scanner2);
+                }
+            }
+        }
+    }
+
+    // compute all of the unique points
+    set<vector<int>> beacons_unique;
+    for (const auto &scanner : scanners) {
+        for (auto &beacon : scanner.beacons) {
+            beacons_unique.insert({scanner.coordinates[0]+beacon[0],scanner.coordinates[1]+beacon[1],scanner.coordinates[2]+beacon[2]});
+        }
+    }
+    cout << "Part 1: " << beacons_unique.size() << endl;
+
+    int part_2 = 0;
+
+    // find the largerst manhattan distance between any 2 points
+    for (const auto &sc1 : scanners) {
+        for (const auto &sc2 : scanners) {
+            int dist = abs(sc1.coordinates[0]-sc2.coordinates[0]) +
+                    abs(sc1.coordinates[1]-sc2.coordinates[1]) +
+                    abs(sc1.coordinates[2]-sc2.coordinates[2]);
+            part_2 = max(part_2, dist);
+        }
+    }
+
+    cout << "Part 2: " << part_2 << endl;
+
 
 }
