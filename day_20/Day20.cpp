@@ -11,7 +11,7 @@
 using namespace std;
 
 void Day20::execute(const vector<string> &lines) {
-    constexpr int STEPS_PART_1 = 2;
+    constexpr int STEPS = 50;
 
     // false = .
     // true = #
@@ -46,23 +46,15 @@ void Day20::execute(const vector<string> &lines) {
     // place 100 rows empty below the image
     for (int i = 0; i < 100; i++) { image.emplace_back(300, false); }
 
-    for (auto &row : image) {
-        for (auto c : row) {
-            if (c) {
-                cout << "#";
-            } else {
-                cout << ".";
-            }
-        }
-        cout << endl;
-    }
-
-    cout << endl;
-    cout << endl;
-
-
     // perform a step
-    for (int s = 0; s < STEPS_PART_1; s++) {
+    for (int s = 0; s < STEPS; s++) {
+        // for part 1 we stop earlier
+        if (s == 2) {
+            int part_1 = 0;
+            for (auto &row : image) { part_1 += count(row.begin(), row.end(), true); }
+            cout << "Part 1: " << part_1 << endl;
+        }
+        vector<vector<bool>> new_image = image;
         for (int x = 1; x < image.size()-1; x++) {
             for (int y = 1; y < image.size()-1; y++) {
                 // get the window around
@@ -80,30 +72,28 @@ void Day20::execute(const vector<string> &lines) {
                     }
                 }
 
-                image[y][x] = lens[index];
+                // place the new image part
+                new_image[y][x] = lens[index];
+
+                // also fix the edges if we are near them
+                if (x == 1) { new_image[y][0] = lens[index]; }
+                if (x == image.size()-2) { new_image[y][image.size()-1] = lens[index]; }
+                if (y == 1) { new_image[0][x] = lens[index]; }
+                if (y == image.size()-2) { new_image[image.size()-1][x] = lens[index]; }
             }
         }
 
-        for (auto &row : image) {
-            for (auto c : row) {
-                if (c) {
-                    cout << "#";
-                } else {
-                    cout << ".";
-                }
-            }
-            cout << endl;
-        }
+        // final corners
+        new_image[0][0] = new_image[0][1];
+        new_image[image.size()-1][0] = new_image[image.size()-1][1];
+        new_image[0][image.size()-1] = new_image[1][image.size()-1];
+        new_image[image.size()-1][image.size()-1] = new_image[image.size()-1][image.size()-2];
 
-        cout << endl;
-        cout << endl;
+        image = new_image;
     }
 
-    int part_1 = 0;
-
-    for (auto &row : image) {
-        part_1 += count(row.begin(), row.end(), true);
-    }
-
-    cout << "Part 1: " << part_1 << endl;
+    // count everything for part 2
+    int part_2 = 0;
+    for (auto &row : image) { part_2 += count(row.begin(), row.end(), true); }
+    cout << "Part 2: " << part_2 << endl;
 }
