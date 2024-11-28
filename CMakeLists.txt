@@ -65,6 +65,8 @@ add_executable(aoc_2021
         day_22/Day22.h
         day_23/Day23.cpp
         day_23/Day23.h
+        day_24/Day24.cpp
+        day_24/Day24.h
 )
 
 target_include_directories(aoc_2021 PRIVATE ${Z3_CXX_INCLUDE_DIRS})
