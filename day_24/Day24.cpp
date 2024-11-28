@@ -6,4 +6,5 @@
 
 using namespace std;
 
-void Day24::execute(const vector<string> &lines) {}
+void Day24::execute(const vector<string> &lines) {
+}

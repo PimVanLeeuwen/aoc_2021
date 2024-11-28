@@ -39,7 +39,7 @@ const vector<pair<int, int> > ALL_POSITIONS = {
 const vector<pair<int, int> > ALL_POSITIONS_2 = {
     {1, 1}, {2, 1}, {4, 1}, {6, 1}, {8, 1},
     {10, 1}, {11, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5},
-    {5, 2}, {5, 3}, {5,4}, {5,5},
+    {5, 2}, {5, 3}, {5, 4}, {5, 5},
     {7, 2}, {7, 3}, {7, 4}, {7, 5},
     {9, 2}, {9, 3}, {9, 4}, {9, 5}
 };
@@ -66,23 +66,24 @@ bool can_move(vector<vector<char> > &map, const pair<int, int> &pos) {
             (pos.second == 3 || map[3][pos.first] == DESTINATIONS.at({pos.first, 3}))) {
             return false;
         }
-    } else if (map.size() == 7 && find(ROOM_POSITIONS_2.begin(), ROOM_POSITIONS_2.end(), pos) != ROOM_POSITIONS_2.end()) {
+    } else if (map.size() == 7 && find(ROOM_POSITIONS_2.begin(), ROOM_POSITIONS_2.end(), pos) != ROOM_POSITIONS_2.
+               end()) {
         if (DESTINATIONS.at(pos) == map[pos.second][pos.first] &&
             ((pos.second == 2 && (map[3][pos.first] == DESTINATIONS.at({pos.first, 3}) && map[4][pos.first] ==
-                                 DESTINATIONS.at({pos.first, 4}) && map[5][pos.first] == DESTINATIONS.
-                                 at({pos.first, 5})))
-            || (pos.second == 3 && map[4][pos.first] == DESTINATIONS.at({pos.first, 4}) && map[5][pos.first] ==
-                DESTINATIONS.at({pos.first, 5}))
-            || (pos.second == 4 && map[5][pos.first] == DESTINATIONS.at({pos.first, 5}))
-            || pos.second == 5)) {
-                return false;
-            }
+                                  DESTINATIONS.at({pos.first, 4}) && map[5][pos.first] == DESTINATIONS.
+                                  at({pos.first, 5})))
+             || (pos.second == 3 && map[4][pos.first] == DESTINATIONS.at({pos.first, 4}) && map[5][pos.first] ==
+                 DESTINATIONS.at({pos.first, 5}))
+             || (pos.second == 4 && map[5][pos.first] == DESTINATIONS.at({pos.first, 5}))
+             || pos.second == 5)) {
+            return false;
+        }
     }
 
 
     // if we are on the hallway, here every snail can only possibly move to one of the two locations in their respective
     // rooms, for convenience we only allow to move from back to the front.
-    if (map.size() == 5  && pos.second == 1) {
+    if (map.size() == 5 && pos.second == 1) {
         switch (map[pos.second][pos.first]) {
             case 'A': return (free_path(map, pos, {3, 2}) && map[3][3] == 'A') ||
                              free_path(map, pos, {3, 3});
@@ -95,7 +96,7 @@ bool can_move(vector<vector<char> > &map, const pair<int, int> &pos) {
             default:
                 return false;
         }
-    } else if (map.size() == 7  && pos.second == 1) {
+    } else if (map.size() == 7 && pos.second == 1) {
         switch (map[pos.second][pos.first]) {
             case 'A':
                 return (free_path(map, pos, {3, 2}) && map[3][3] == 'A' && map[4][3] == 'A' && map[5][3] == 'A'
@@ -208,10 +209,14 @@ int do_move(vector<vector<char> > &map, const pair<int, int> &source, const pair
 
     // compute cost per step
     switch (map[source.second][source.first]) {
-        case 'A': multiplier = 1; break;
-        case 'B': multiplier = 10; break;
-        case 'C': multiplier = 100; break;
-        case 'D': multiplier = 1000; break;
+        case 'A': multiplier = 1;
+            break;
+        case 'B': multiplier = 10;
+            break;
+        case 'C': multiplier = 100;
+            break;
+        case 'D': multiplier = 1000;
+            break;
         default: throw runtime_error("Doing invalid move char");
     }
 
@@ -226,16 +231,15 @@ int do_move(vector<vector<char> > &map, const pair<int, int> &source, const pair
 bool is_valid(const vector<vector<char> > &map) {
     if (map.size() == 5) {
         return map[2][3] == 'A' && map[3][3] == 'A' &&
-           map[2][5] == 'B' && map[3][5] == 'B' &&
-           map[2][7] == 'C' && map[3][7] == 'C' &&
-           map[2][9] == 'D' && map[3][9] == 'D';
+               map[2][5] == 'B' && map[3][5] == 'B' &&
+               map[2][7] == 'C' && map[3][7] == 'C' &&
+               map[2][9] == 'D' && map[3][9] == 'D';
     } else {
         return map[2][3] == 'A' && map[3][3] == 'A' && map[4][3] == 'A' && map[5][3] == 'A' &&
-           map[2][5] == 'B' && map[3][5] == 'B' && map[4][5] == 'B' && map[5][5] == 'B' &&
-           map[2][7] == 'C' && map[3][7] == 'C' && map[4][7] == 'C' && map[5][7] == 'C' &&
-           map[2][9] == 'D' && map[3][9] == 'D' && map[4][9] == 'D' && map[5][9] == 'D';
+               map[2][5] == 'B' && map[3][5] == 'B' && map[4][5] == 'B' && map[5][5] == 'B' &&
+               map[2][7] == 'C' && map[3][7] == 'C' && map[4][7] == 'C' && map[5][7] == 'C' &&
+               map[2][9] == 'D' && map[3][9] == 'D' && map[4][9] == 'D' && map[5][9] == 'D';
     }
-
 }
 
 long solve_map(vector<vector<char> > &map) {
@@ -244,7 +248,7 @@ long solve_map(vector<vector<char> > &map) {
 
     vector<pair<pair<int, int>, pair<int, int> > > possible_moves;
     // gather all possible moves that we can do here
-    vector<pair<int, int>> all_positions = (map.size() == 5) ? ALL_POSITIONS : ALL_POSITIONS_2;
+    vector<pair<int, int> > all_positions = (map.size() == 5) ? ALL_POSITIONS : ALL_POSITIONS_2;
     for (const auto &s: all_positions) {
         vector<pair<int, int> > destinations = give_moves(map, s);
         for (const auto &d: destinations) { possible_moves.emplace_back(s, d); }
@@ -281,20 +285,19 @@ void Day23::execute(const vector<string> &lines) {
     // ps I know they are not snails, but it writes easier
     // this is the map of the snails
     vector<vector<char>> map;
-    vector<vector<char>> map_part_2;
+    vector<vector<char> > map_part_2;
     bool map_1 = true;
 
-    for (const string &line : lines) {
+    for (const string &line: lines) {
         // move on to the second map
         if (line.empty()) { map_1 = false; continue; }
 
         // grab one line
         vector<char> char_line;
-        for (const char &c : line) { char_line.push_back(c); }
+        for (const char &c: line) { char_line.push_back(c); }
 
         // add line to corresponding map
-        if (map_1) { map.push_back(char_line); }
-        else { map_part_2.push_back(char_line); }
+        if (map_1) { map.push_back(char_line); } else { map_part_2.push_back(char_line); }
     }
 
     // compute part 1

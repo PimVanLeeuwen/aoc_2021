@@ -14,5 +14,4 @@ public:
 };
 
 
-
 #endif //DAY24_H
