@@ -4,12 +4,16 @@
 
 #include "Day24.h"
 
+#include <cmath>
+#include <deque>
 #include <iostream>
 #include <map>
 #include <sstream>
 
 
 using namespace std;
+
+map<pair<int, int>, deque<int>> KNOWN_SOLUTIONS;
 
 long process_model_num(const int digit, const int w, long z) {
     // this solves the instructions for a given digit, model number for that digit and z from previous exercise
@@ -56,40 +60,60 @@ void decrease_number(vector<int> &model) {
 }
 
 // checks if b is larger than a
-bool isLarger(const vector<int> &a, const vector<int> &b) {
+bool isLarger(const deque<int> &a, const deque<int> &b) {
     for (int i = 0; i < a.size(); i++) {
         if (b[i] > a[i]) { return true; }
         if (b[i] < a[i]) { return false; }
     }
 }
 
-vector<int> solve(const int digit = 13, const int z = 0) {
-    if (abs(z) > 10000) return {};
-    vector<int> max_sol = {};
-    for (int z_test = -5000; z_test < 5000; z_test++) {
-        for (int model_test = 1; model_test < 10; model_test++) {
-
-            if (process_model_num(digit, model_test, z_test) == z) {
-                // for every possible solution check if the smaller problem has a solution (we get the largest back)
-                vector<int> interim_sol;
-                if (digit > 0) interim_sol = solve(digit-1, z_test);
-                if (digit > 0 && interim_sol.empty()) continue;
-                interim_sol.push_back(model_test);
-
-                if (max_sol.empty() || isLarger(max_sol, interim_sol)) { max_sol = interim_sol; }
-            }
-        }
+bool verify(const deque<int> &model) {
+    int counter = 0;
+    long z = 0;
+    while (counter < model.size()) {
+        z = process_model_num(counter, model[counter], z);
+        counter++;
     }
 
-    return max_sol;
+    return z == 0;
+}
 
+deque<int> solve(const int digit, const long z) {
+    // branch pruning if we already know the solution
+    if (KNOWN_SOLUTIONS.find({digit, z}) != KNOWN_SOLUTIONS.end()) {
+        return KNOWN_SOLUTIONS.at({digit, z});
+    }
+
+    // construct a solution
+    deque<int> extreme_sol = {};
+
+    // check all possible options for digit here and possible z values
+    for (int model_test = 1; model_test < 10; model_test++) {
+        // get the new_z value
+        const long new_z = process_model_num(digit, model_test, z);
+        if (new_z > pow(26, (14 - digit))) { return {}; }
+
+        deque<int> interim_sol;
+        if (digit < 13) interim_sol = solve(digit+1, new_z);
+        if (digit < 13 && interim_sol.empty()) continue;
+        interim_sol.push_front(model_test);
+
+        // skip invalid solutions for the complete part
+        if (digit == 0 && !verify(interim_sol)) { continue; }
+
+        // keep track of the biggest one
+        if (extreme_sol.empty() || isLarger(extreme_sol, interim_sol)) { extreme_sol = interim_sol; }}
+
+    KNOWN_SOLUTIONS[{digit, z}] = extreme_sol;
+    return extreme_sol;
 }
 
 void Day24::execute(const vector<string> &lines) {
     // tried backwards recursive algorithm but this is too slow
-    vector<int> model = solve(13, 0);
+    const deque<int> part_1 = solve(0, 0);
 
     cout << "Part 1: ";
-    for (const auto &num : model) { cout << num << "||"; }
+    for (const auto &num : part_1) { cout << num; }
     cout << endl;
+
 }
