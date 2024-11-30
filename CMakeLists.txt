@@ -66,6 +66,8 @@ add_executable(aoc_2021
         day_23/Day23.cpp
         day_23/Day23.h
         day_24/Day24.cpp
+        day_25/Day25.cpp
+        day_25/Day25.h
         day_24/Day24.h
 )
 
